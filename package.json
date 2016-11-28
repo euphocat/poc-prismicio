@@ -1,0 +1,23 @@
+{
+  "name": "blogname-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server --entry-file=index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/euphocat/poc-prismicio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/euphocat/poc-prismicio/issues"
+  },
+  "homepage": "https://github.com/euphocat/poc-prismicio#readme",
+  "devDependencies": {
+    "live-server": "^1.1.0"
+  }
+}

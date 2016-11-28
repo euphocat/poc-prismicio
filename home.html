@@ -1,36 +1,14 @@
 <div class="col-md-8 content-main">
- <div class="content-grid">
-   <div class="content-grid-head">
-     <h3>POST OF THE DAY</h3>
-     <h4>July 24, 2014,Posted by: <a href="#">Admin</a></h4>
-     <div class="clearfix"></div>
-   </div>
-   <div class="content-grid-info">
-     <h3><a href="/article/1">MORBI IN SEM QUIS DUI</a></h3>
-     <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
-     <img src="images/c1.jpg" alt=""/>
-     <a class="bttn" href="/article/1">MORE</a>
-  </div>
- </div>
  
- <div class="content-grid-sec">
+ <div ng-repeat="article in ctrl.articles" class="content-grid-sec">
    <div class="content-sec-info">
-       <h3><a href="/article/1">ALIQUAM TINCIDUNT MAURI</a></h3>
+       <h3><a href="/article/1">{{::article.title}}</a></h3>
        <h4>Jul 23, 2014, Posted by : <a href="#">Admin</a></h4>
-       <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
-       <img src="images/c2.jpg" alt=""/>
+       <p>{{::article.body}}</p>
+       <img ng-src="{{article.image}}" alt=""/>
        <a class="bttn" href="/article/1">MORE</a>
    </div>
  </div>
- <div class="content-grid-sec">
-   <div class="content-sec-info">
-       <h3><a href="/article/1">VESTIBULUM COMMODO FELIS</a></h3>
-       <h4>Jul 23, 2014, Posted by : <a href="#">Admin</a></h4>
-       <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
-       <img src="images/c3.jpg" alt=""/>
-       <a class="bttn" href="/article/1">MORE</a>
-   </div>
- </div>        
  <div class="pages">
    <ul>
      <li class="active"><a href="#">1</a></li>
