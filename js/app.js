@@ -98,9 +98,9 @@
 
             apiPromise
               .then(api => api.previewSession(token, linkResolver, '/'))
-              .then ((err, redirectUrl) => {
-                  $cookies.put(Prismic.previewCookie, token, { maxAge: 60 * 30 * 1000, path: '/', httpOnly: false });
-                  return redirectUrl;
+              .then(redirectUrl => {
+                $cookies.put(Prismic.previewCookie, token, { maxAge: 60 * 30 * 1000, path: '/', httpOnly: false });
+                return redirectUrl;
               })
               .then(response => deferred.resolve(response));
 
