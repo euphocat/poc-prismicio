@@ -2,11 +2,11 @@
  
  <div ng-repeat="article in ctrl.articles" class="content-grid-sec">
    <div class="content-sec-info">
-       <h3><a href="/article/1">{{::article.title}}</a></h3>
+       <h3><a href="/article/{{::article.uid}}">{{::article.title}}</a></h3>
        <h4>Jul 23, 2014, Posted by : <a href="#">Admin</a></h4>
        <p>{{::article.body}}</p>
        <img ng-src="{{article.image}}" alt=""/>
-       <a class="bttn" href="/article/1">MORE</a>
+       <a class="bttn" href="/article/{{::article.uid}}">MORE</a>
    </div>
  </div>
  <div class="pages">

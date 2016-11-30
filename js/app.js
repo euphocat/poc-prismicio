@@ -8,21 +8,37 @@
           controller: 'HomeController',
           controllerAs: 'ctrl'
         })
-        .when('/article/:id', {
-          templateUrl: 'article.html'
+        .when('/article/:uid', {
+          templateUrl: 'article.html',
+          controller:'DetailController',
+          controllerAs: 'ctrl'
         });
       $locationProvider.html5Mode(true);
     });
 
   angular.module('poc')
-    .controller('HomeController', ['prismicService', '$scope', function (prismicService, $scope) {
+    .controller('HomeController', ['prismicService', function (prismicService) {
         var vm = this;
         prismicService.getArticles().then(articles => {
           vm.articles = articles.map(article => ({
             body: article.getStructuredText('article.body').getFirstParagraph().text,
             title: article.getText('article.title'),
-            image: article.getImage('article.picture').url
+            image: article.getImage('article.picture').url,
+            uid: article.uid
           }));
+        });   
+    }]);
+
+  angular.module('poc')
+    .controller('DetailController', ['prismicService','$routeParams', '$sce', function (prismicService, $routeParams, $sce) {
+        var vm = this;
+        prismicService.getArticle($routeParams.uid).then(article => {
+          vm.article = {
+            body: $sce.trustAsHtml(article.getStructuredText('article.body').asHtml()),
+            title: article.getText('article.title'),
+            image: article.getImage('article.picture').url,
+            uid: article.uid
+          };
         });   
     }]);
 
@@ -48,7 +64,17 @@
                 .then(response => deferred.resolve(response.results));
 
               return deferred.promise;
-            }
+            },
+          getArticle: (uid) => {
+            var deferred = $q.defer();
+
+              apiPromise
+                .then(api => api.getByUID("article", uid))
+                .then(response => {
+                  return deferred.resolve(response)});
+
+              return deferred.promise;
+          }
         }
 
       }
