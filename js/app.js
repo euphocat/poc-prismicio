@@ -35,7 +35,9 @@
 
  angular.module('poc')
     .controller('PreviewController', function ($location, prismicService, $cookies) {
-      prismicService.preview($location.search()['token']);
+      prismicService.preview($location.search()['token']).then(function (response) {
+        console.log(response);
+      })
     })
     
 
