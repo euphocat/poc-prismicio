@@ -18,7 +18,7 @@
             $location.query['token']
           }
         });
-      $locationProvider.html5Mode(true);
+      $locationProvider.html5Mode(false);
     });
 
   angular.module('poc')
