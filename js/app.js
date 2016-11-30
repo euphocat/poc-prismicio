@@ -34,9 +34,9 @@
     }]);
 
  angular.module('poc')
-    .controller('PreviewController', function ($location, prismicService, $cookies) {
-      prismicService.preview($location.search()['token']).then(function (response) {
-        console.log(response);
+    .controller('PreviewController', function ($location, prismicService) {
+      prismicService.preview($location.search()['token']).then(function (redirectUrl) {
+        $location.path(redirectUrl);
       })
     })
     
@@ -100,7 +100,7 @@
               .then(api => {
                 api.previewSession(token, linkResolver, '/', function(err, redirectUrl) {
                   $cookies.put(Prismic.previewCookie, token, { maxAge: 60 * 30 * 1000, path: '/', httpOnly: false });
-                  $location.path(redirectUrl);
+                  return redirectUrl;
                 })
               })
               .then(response => {
