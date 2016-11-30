@@ -97,14 +97,12 @@
             var deferred = $q.defer();
 
             apiPromise
-              .then(api => {
-                api.previewSession(token, linkResolver, '/', function(err, redirectUrl) {
+              .then(api => api.previewSession(token, linkResolver, '/'))
+              .then ((err, redirectUrl) => {
                   $cookies.put(Prismic.previewCookie, token, { maxAge: 60 * 30 * 1000, path: '/', httpOnly: false });
                   return redirectUrl;
-                })
               })
-              .then(response => {
-                return deferred.resolve(response)});
+              .then(response => deferred.resolve(response));
 
             return deferred.promise;
           }
