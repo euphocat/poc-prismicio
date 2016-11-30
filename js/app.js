@@ -15,7 +15,7 @@
         })
         .when('/preview', {
           controller: function ($location, prismicService, $cookies) {
-            $location.query['token']
+            prismicService.preview($location.query['token']);
           }
         });
       $locationProvider.html5Mode(false);
