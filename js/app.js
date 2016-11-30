@@ -14,9 +14,8 @@
           controllerAs: 'ctrl'
         })
         .when('/preview', {
-          controller: function ($location, prismicService, $cookies) {
-            prismicService.preview($location.query['token']);
-          }
+          template: '<div></div>',
+          controller: 'PreviewController'
         });
       $locationProvider.html5Mode(false);
     });
@@ -33,6 +32,12 @@
           }));
         });   
     }]);
+
+ angular.module('poc')
+    .controller('PreviewController', function ($location, prismicService, $cookies) {
+      prismicService.preview($location.search()['token']);
+    })
+    
 
   angular.module('poc')
     .controller('DetailController', ['prismicService','$routeParams', '$sce', function (prismicService, $routeParams, $sce) {
@@ -92,7 +97,7 @@
             apiPromise
               .then(api => {
                 api.previewSession(token, linkResolver, '/', function(err, redirectUrl) {
-                  $cookies.put(Prismic.previewCookie, previewToken, { maxAge: 60 * 30 * 1000, path: '/', httpOnly: false });
+                  $cookies.put(Prismic.previewCookie, token, { maxAge: 60 * 30 * 1000, path: '/', httpOnly: false });
                   $location.path(redirectUrl);
                 })
               })
