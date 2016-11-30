@@ -1,6 +1,6 @@
 (function() {
 
-  angular.module('poc', ['ngRoute'])
+  angular.module('poc', ['ngRoute', 'ngCookies'])
     .config(function($routeProvider, $locationProvider) {
       $routeProvider
         .when('/', {
@@ -12,6 +12,11 @@
           templateUrl: 'article.html',
           controller:'DetailController',
           controllerAs: 'ctrl'
+        })
+        .when('/preview', {
+          controller: function ($location, prismicService, $cookies) {
+            $location.query['token']
+          }
         });
       $locationProvider.html5Mode(true);
     });
@@ -51,8 +56,13 @@
     
       this.$get = Service;
 
-      function Service ($q) {
+      function Service ($q, $cookies, $location) {
         var apiPromise = Prismic.api(self.apiUrl); 
+
+        var linkResolver = function (doc) {
+          // Pretty URLs for known types
+          return "article/" + doc.uid;
+        }
 
         return {
           getArticles: () => 
@@ -68,12 +78,28 @@
           getArticle: (uid) => {
             var deferred = $q.defer();
 
-              apiPromise
-                .then(api => api.getByUID("article", uid))
-                .then(response => {
-                  return deferred.resolve(response)});
+            apiPromise
+              .then(api => api.getByUID("article", uid))
+              .then(response => {
+                return deferred.resolve(response)});
 
-              return deferred.promise;
+            return deferred.promise;
+          },
+
+          preview: (token) => {
+            var deferred = $q.defer();
+
+            apiPromise
+              .then(api => {
+                api.previewSession(token, linkResolver, '/', function(err, redirectUrl) {
+                  $cookies.put(Prismic.previewCookie, previewToken, { maxAge: 60 * 30 * 1000, path: '/', httpOnly: false });
+                  $location.path(redirectUrl);
+                })
+              })
+              .then(response => {
+                return deferred.resolve(response)});
+
+            return deferred.promise;
           }
         }
 
