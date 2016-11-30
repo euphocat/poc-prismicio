@@ -66,7 +66,7 @@
 
         var linkResolver = function (doc) {
           // Pretty URLs for known types
-          return "article/" + doc.uid;
+          return "/article/" + doc.uid;
         }
 
         return {
