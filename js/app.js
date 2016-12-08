@@ -63,8 +63,10 @@
     
       this.$get = Service;
 
+      this.accessToken = 'MC5XRW1TQmlVQUFLY3Y1Smo3.77-977-977-977-977-9QWvvv73vv73vv71l77-977-9Lu-_vUZRbUrvv73vv73vv70277-977-977-977-9M1YdAO-_vQ';
+
       function Service ($q, $cookies, $location) {
-        var apiPromise = Prismic.api(self.apiUrl); 
+        var apiPromise = Prismic.api(self.apiUrl, {accessToken: self.accessToken}); 
 
         var linkResolver = function (doc) {
           // Pretty URLs for known types
